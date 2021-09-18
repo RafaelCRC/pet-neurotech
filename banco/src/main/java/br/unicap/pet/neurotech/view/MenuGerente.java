@@ -13,7 +13,8 @@ public class MenuGerente {
             System.out.println("2 - Apagar Conta");
             System.out.println("3 - Buscar Conta");
             System.out.println("4 - Listar Contas");
-            System.out.println("5 - Voltar");
+            System.out.println("5 - Bonificar Conta");
+            System.out.println("6 - Voltar");
             op = Leitor.getLeitor().nextInt();
             System.out.println("");
             switch (op) {
@@ -30,12 +31,15 @@ public class MenuGerente {
                     gv.getContasList();
                     break;
                 case 5:
+                    gv.bonificaConta();
+                    break;
+                case 6:
                     System.out.println("Voltando!!");
                     break;
                 default:
                     System.out.println("Opcao invalida!!");
             }
-        } while (op != 5);
+        } while (op != 6);
 
     }
 

@@ -14,7 +14,9 @@ public interface ClienteDAO {
 
     boolean remover(int idConta);
 
-    Conta getConta(int idConta);
+    String getConta(int idConta);
 
     List getContas();
+
+    boolean bonifica(int idConta);
 }

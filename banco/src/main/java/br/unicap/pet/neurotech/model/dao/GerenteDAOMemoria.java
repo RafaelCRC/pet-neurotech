@@ -18,21 +18,43 @@ public class GerenteDAOMemoria implements GerenteDAO {
         return self;
     }
 
-    public boolean criarConta(int idConta) {
-        Conta novaConta = new Conta(idConta);
+    @Override
+    public boolean criarConta(int idConta, int tipoConta) {
+        Conta novaConta;
+        if (tipoConta == 1) {
+            novaConta = new Conta(idConta);
+        } else {
+            novaConta = new ContaBoni(idConta);
+        }
+
         return clientesMe.add(novaConta);
     }
 
+    @Override
     public boolean removerConta(int idConta) {
         return clientesMe.remover(idConta);
     }
 
-    public Object getConta(int idConta) {
+    @Override
+    public String getConta(int idConta) {
         return clientesMe.getConta(idConta);
     }
 
+    @Override
     public List getContasList() {
         return clientesMe.getContas();
+    }
+
+    @Override
+    public String bonificarConta(int idConta) {
+        if (clientesMe.buscarConta(idConta)) {
+            if (clientesMe.bonifica(idConta)) {
+                return "conta bonificada";
+            } else {
+                return "conta não é do tipo bonificada";
+            }
+        }
+        return "conta não existe";
     }
 
 }

@@ -71,22 +71,38 @@ public class ClienteDAOMemoria implements ClienteDAO {
     }
 
     @Override
-    public Conta getConta(int idConta) {
+    public String getConta(int idConta) {
+        String conta;
         for (int i = 0; i < this.clientes.size(); i++) {
             if (this.clientes.get(i).getNumero() == idConta) {
-                return this.clientes.get(i);
+                conta = ("Conta: " + this.clientes.get(i).getNumero() + "; Saldo: " + this.clientes.get(i).getSaldo()
+                        + "; Tipo: " + this.clientes.get(i).getTipo());
+                return conta;
             }
         }
-        return null;
+        return "não existe uma conta com esse numero";
     }
 
     @Override
     public List getContas() {
         List<String> contas = new ArrayList<String>();
         for (int i = 0; i < this.clientes.size(); i++) {
-            contas.add("Conta: " + this.clientes.get(i).getNumero() + "; Saldo: " + this.clientes.get(i).getSaldo());
+            contas.add("Conta: " + this.clientes.get(i).getNumero() + "; Saldo: " + this.clientes.get(i).getSaldo()
+                    + "; Tipo: " + this.clientes.get(i).getTipo());
         }
         return contas;
+    }
+
+    @Override
+    public boolean bonifica(int idConta) {
+        for (int i = 0; i < this.clientes.size(); i++) {
+            if (this.clientes.get(i).getTipo() == "bonificada" && this.clientes.get(i).getNumero() == idConta) {
+                ContaBoni conta = (ContaBoni) this.clientes.get(i);
+                conta.doBonifica();
+                return true;
+            }
+        }
+        return false;
     }
 
 }

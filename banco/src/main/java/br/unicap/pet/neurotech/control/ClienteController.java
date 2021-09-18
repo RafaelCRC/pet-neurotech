@@ -18,4 +18,8 @@ public class ClienteController {
     public void depositar(int numConta, float quantia) {
         dao.depositarConta(numConta, quantia);
     }
+
+    public String getConta(int numConta) {
+        return dao.getConta(numConta);
+    }
 }

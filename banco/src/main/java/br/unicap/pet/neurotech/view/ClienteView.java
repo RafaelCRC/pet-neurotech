@@ -38,4 +38,14 @@ public class ClienteView {
             System.out.println("Conta Inexistente");
         }
     }
+
+    public void checarConta() {
+        int numConta;
+
+        System.out.println("numero da conta ");
+        numConta = Leitor.getLeitor().nextInt();
+        String conta = acesso.getConta(numConta);
+
+        System.out.println(conta);
+    }
 }

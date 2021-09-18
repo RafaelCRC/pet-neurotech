@@ -10,16 +10,24 @@ public class GerenteView {
     GerenteController acesso = new GerenteController();
 
     public void criarConta() {
-        int numConta;
+        int numConta, tipoConta;
 
         System.out.println("numero da nova conta ");
         numConta = Leitor.getLeitor().nextInt();
-        boolean criouConta = acesso.criarConta(numConta);
 
-        if (criouConta) {
-            System.out.println("conta criada com sucesso");
+        System.out.println("\nTipo de conta ");
+        System.out.println("1 - Conta normal");
+        System.out.println("2 - Conta bonificada");
+        tipoConta = Leitor.getLeitor().nextInt();
+        if (tipoConta > 0 && tipoConta < 3) {
+            boolean criouConta = acesso.criarConta(numConta, tipoConta);
+            if (criouConta) {
+                System.out.println("conta criada com sucesso");
+            } else {
+                System.out.println("ja existe uma conta com esse numero");
+            }
         } else {
-            System.out.println("ja existe uma conta com esse numero");
+            System.out.println("Tipo invalido");
         }
 
     }
@@ -56,13 +64,19 @@ public class GerenteView {
 
         System.out.println("numero da conta ");
         numConta = Leitor.getLeitor().nextInt();
-        Object haConta = acesso.getConta(numConta);
+        String conta = acesso.getConta(numConta);
 
-        if (haConta != null) {
-            haConta.toString();
-        } else {
-            System.out.println("nao existe uma conta com esse numero");
-        }
+        System.out.println(conta);
+    }
+
+    public void bonificaConta() {
+        int numConta;
+
+        System.out.println("numero da conta ");
+        numConta = Leitor.getLeitor().nextInt();
+        String message = acesso.bonificarConta(numConta);
+
+        System.out.println(message);
     }
 
 }
