@@ -24,10 +24,9 @@ public class Conta {
         saldo = +quantia;
     }
 
-    @Override
-    public String toString() {
-        System.out.println("Conta: " + this.numConta + " Saldo: " + this.saldo);
-        return super.toString();
+    
+    public float getSaldo(){
+        return this.saldo;
     }
 
 }

@@ -44,7 +44,7 @@ public class GerenteView {
 
         if (!contas.isEmpty()) {
             for (int i = 0; i < contas.size(); i++) {
-                contas.get(i).toString();
+                System.out.println(contas.get(i));
             }
         } else {
             System.out.println("nenhuma conta registrada");

@@ -70,6 +70,7 @@ public class ClienteDAOMemoria implements ClienteDAO {
         return false;
     }
 
+    @Override
     public Conta getConta(int idConta) {
         for (int i = 0; i < this.clientes.size(); i++) {
             if (this.clientes.get(i).getNumero() == idConta) {
@@ -81,7 +82,11 @@ public class ClienteDAOMemoria implements ClienteDAO {
 
     @Override
     public List getContas() {
-        return this.clientes;
+        List<String> contas = new ArrayList<String>();
+        for (int i = 0; i < this.clientes.size(); i++) {
+            contas.add("Conta: " + this.clientes.get(i).getNumero() + "; Saldo: " + this.clientes.get(i).getSaldo());
+        }
+        return contas;
     }
 
 }
