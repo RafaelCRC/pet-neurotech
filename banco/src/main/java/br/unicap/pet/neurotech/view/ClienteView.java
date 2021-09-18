@@ -7,33 +7,33 @@ public class ClienteView {
 
     ClienteController acesso = new ClienteController();
 
-    public void sacar(){
+    public void sacar() {
         int numConta;
 
         System.out.println("numero da conta ");
         numConta = Leitor.getLeitor().nextInt();
         boolean haConta = acesso.buscar(numConta);
 
-        if(haConta){
+        if (haConta) {
             System.out.println("Informe a quantia a Sacar: ");
             float quantia = Leitor.getLeitor().nextFloat();
-            acesso.sacar(numConta,quantia);
+            acesso.sacar(numConta, quantia);
         } else {
             System.out.println("Conta Inexistente");
         }
     }
-    
-    public void depositar(){
+
+    public void depositar() {
         int numConta;
 
         System.out.println("numero da conta ");
         numConta = Leitor.getLeitor().nextInt();
         boolean haConta = acesso.buscar(numConta);
 
-        if(haConta){
-            System.out.println("Informe a quantia a Sacar: ");
+        if (haConta) {
+            System.out.println("Informe a quantia a depositar: ");
             float quantia = Leitor.getLeitor().nextFloat();
-            acesso.depositar(numConta,quantia);
+            acesso.depositar(numConta, quantia);
         } else {
             System.out.println("Conta Inexistente");
         }

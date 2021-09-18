@@ -7,15 +7,15 @@ public class ClienteController {
 
     private ClienteDAO dao = ClienteDAOMemoria.getInstance();
 
-    public boolean buscar (int numConta){
+    public boolean buscar(int numConta) {
         return dao.buscarConta(numConta);
     }
 
     public void sacar(int numConta, float quantia) {
-        dao.sacarConta(numConta,quantia);
+        dao.sacarConta(numConta, quantia);
     }
 
     public void depositar(int numConta, float quantia) {
-        dao.depositarConta(numConta,quantia);
+        dao.depositarConta(numConta, quantia);
     }
 }

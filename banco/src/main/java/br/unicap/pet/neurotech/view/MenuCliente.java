@@ -16,7 +16,7 @@ public class MenuCliente {
             System.out.println("");
             switch (op) {
                 case 1:
-                    cv.sacar();;
+                    cv.sacar();
                     break;
                 case 2:
                     cv.depositar();
