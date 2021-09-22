@@ -3,6 +3,12 @@ package br.unicap.pet.neurotech.model.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.unicap.pet.neurotech.model.exceptions.ContaInexistenteException;
+import br.unicap.pet.neurotech.model.exceptions.ContaJaExisteException;
+import br.unicap.pet.neurotech.model.exceptions.ContaTipoErradoException;
+import br.unicap.pet.neurotech.model.exceptions.SaldoInsuficienteException;
+import br.unicap.pet.neurotech.model.exceptions.ValorInvalidoException;
+
 public class ClienteDAOMemoria implements ClienteDAO {
 
     private List<Conta> clientes;
@@ -31,7 +37,10 @@ public class ClienteDAOMemoria implements ClienteDAO {
     }
 
     @Override
-    public void sacarConta(int numConta, float quantia) {
+    public void sacarConta(int numConta, float quantia) throws SaldoInsuficienteException, ValorInvalidoException {
+        if (quantia < 0){
+            throw new ValorInvalidoException();
+        }
         for (Conta conta : clientes) {
             if (conta.getNumero() == numConta) {
                 conta.sacar(quantia);
@@ -40,7 +49,10 @@ public class ClienteDAOMemoria implements ClienteDAO {
     }
 
     @Override
-    public void depositarConta(int numConta, float quantia) {
+    public void depositarConta(int numConta, float quantia) throws ValorInvalidoException {
+        if (quantia < 0){
+            throw new ValorInvalidoException();
+        }
         for (Conta conta : clientes) {
             if (conta.getNumero() == numConta) {
                 conta.depositar(quantia);
@@ -49,60 +61,72 @@ public class ClienteDAOMemoria implements ClienteDAO {
     }
 
     @Override
-    public boolean add(Conta conta) {
-        if (buscarConta(conta.getNumero())) {
-            return false;
+    public void criarConta(int idConta, int tipoConta) throws ContaJaExisteException {
+        if (buscarConta(idConta)) {
+            throw new ContaJaExisteException();
+        }
+        Conta novaConta;
+        if (tipoConta == 1) {
+            novaConta = new Conta(idConta);
         } else {
-            this.clientes.add(conta);
-            return true;
+            novaConta = new ContaBoni(idConta);
         }
-
+        this.clientes.add(novaConta);
     }
 
     @Override
-    public boolean remover(int idConta) {
-        for (int i = 0; i < this.clientes.size(); i++) {
-            if (this.clientes.get(i).getNumero() == idConta) {
-                this.clientes.remove(this.clientes.get(i));
-                return true;
+    public void remover(int idConta) throws ContaInexistenteException {
+
+        for (Conta conta : clientes){
+            if (conta.getNumero() == idConta){
+                clientes.remove(conta);
+                return;
             }
         }
-        return false;
+        throw new ContaInexistenteException();
     }
 
     @Override
-    public String getConta(int idConta) {
-        String conta;
-        for (int i = 0; i < this.clientes.size(); i++) {
-            if (this.clientes.get(i).getNumero() == idConta) {
-                conta = ("Conta: " + this.clientes.get(i).getNumero() + "; Saldo: " + this.clientes.get(i).getSaldo()
-                        + "; Tipo: " + this.clientes.get(i).getTipo());
-                return conta;
+    public String getConta(int idConta) throws ContaInexistenteException {
+
+        String contaString;
+
+        for (Conta conta : clientes){
+            if (conta.getNumero() == idConta){
+                contaString = ("Conta: " + conta.getNumero() + "; Saldo: " + conta.getSaldo() + "; Tipo: " + conta.getTipo());
+
+                return contaString;
             }
         }
-        return "não existe uma conta com esse numero";
+        throw new ContaInexistenteException();
     }
 
     @Override
     public List getContas() {
+
         List<String> contas = new ArrayList<String>();
-        for (int i = 0; i < this.clientes.size(); i++) {
-            contas.add("Conta: " + this.clientes.get(i).getNumero() + "; Saldo: " + this.clientes.get(i).getSaldo()
-                    + "; Tipo: " + this.clientes.get(i).getTipo());
+
+        for (Conta conta : clientes){
+            contas.add("Conta: " + conta.getNumero() + "; Saldo: " + conta.getSaldo() + "; Tipo: " + conta.getTipo());
         }
         return contas;
     }
 
     @Override
-    public boolean bonifica(int idConta) {
-        for (int i = 0; i < this.clientes.size(); i++) {
-            if (this.clientes.get(i).getTipo() == "bonificada" && this.clientes.get(i).getNumero() == idConta) {
-                ContaBoni conta = (ContaBoni) this.clientes.get(i);
-                conta.doBonifica();
-                return true;
+    public void bonifica(int idConta) throws ContaInexistenteException, ContaTipoErradoException {
+
+        if (buscarConta(idConta)){
+            for (Conta conta : clientes){
+                if (conta.getNumero() == idConta){
+                    if (conta instanceof ContaBoni){
+                        ((ContaBoni)conta).doBonifica();
+                        return;
+                    }
+                }
             }
+            throw new ContaTipoErradoException();
         }
-        return false;
+        throw new ContaInexistenteException();
     }
 
 }

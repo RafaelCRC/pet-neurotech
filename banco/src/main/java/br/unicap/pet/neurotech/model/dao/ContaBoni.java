@@ -6,17 +6,17 @@ public class ContaBoni extends Conta {
 
     public ContaBoni(int num) {
         super(num);
-        setTipo("bonificada");
+        this.tipo = "bonificada";
     }
 
     @Override
     public void depositar(float quantia) {
-        this.saldo = +quantia;
-        bonus = +(float) (quantia * 0.01);
+        this.saldo = this.saldo + quantia;
+        this.bonus = (float) (this.bonus + (quantia * 0.01));
     }
 
     public void doBonifica() {
-        saldo = saldo + bonus;
+        this.saldo = this.saldo + this.bonus;
     }
 
 }

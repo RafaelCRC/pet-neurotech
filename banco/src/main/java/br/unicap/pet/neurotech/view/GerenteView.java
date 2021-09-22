@@ -3,11 +3,16 @@ package br.unicap.pet.neurotech.view;
 import java.util.List;
 
 import br.unicap.pet.neurotech.control.GerenteController;
+import br.unicap.pet.neurotech.model.exceptions.ContaInexistenteException;
+import br.unicap.pet.neurotech.model.exceptions.ContaJaExisteException;
+import br.unicap.pet.neurotech.model.exceptions.ContaTipoErradoException;
 import br.unicap.pet.neurotech.view.util.Leitor;
 
 public class GerenteView {
 
     GerenteController acesso = new GerenteController();
+
+    //GerenteController acessotemp = new ClienteController();
 
     public void criarConta() {
         int numConta, tipoConta;
@@ -20,11 +25,11 @@ public class GerenteView {
         System.out.println("2 - Conta bonificada");
         tipoConta = Leitor.getLeitor().nextInt();
         if (tipoConta > 0 && tipoConta < 3) {
-            boolean criouConta = acesso.criarConta(numConta, tipoConta);
-            if (criouConta) {
+            try {
+                acesso.criarConta(numConta, tipoConta);
                 System.out.println("conta criada com sucesso");
-            } else {
-                System.out.println("ja existe uma conta com esse numero");
+            } catch (ContaJaExisteException e){
+                System.out.println("Conta ja existe");
             }
         } else {
             System.out.println("Tipo invalido");
@@ -37,18 +42,17 @@ public class GerenteView {
 
         System.out.println("numero da conta ");
         numConta = Leitor.getLeitor().nextInt();
-        boolean removeuConta = acesso.removerConta(numConta);
 
-        if (removeuConta) {
+        try {
+            acesso.remover(numConta);
             System.out.println("conta removida com sucesso");
-        } else {
-            System.out.println("nao existe uma conta com esse numero");
+        }catch (ContaInexistenteException e){
+            System.out.println("Conta Inexistente");
         }
-
     }
 
     public void getContasList() {
-        List contas = acesso.getContasList();
+        List contas = acesso.getContas();
 
         if (!contas.isEmpty()) {
             for (int i = 0; i < contas.size(); i++) {
@@ -64,9 +68,13 @@ public class GerenteView {
 
         System.out.println("numero da conta ");
         numConta = Leitor.getLeitor().nextInt();
-        String conta = acesso.getConta(numConta);
 
-        System.out.println(conta);
+        try {
+            String conta = acesso.getConta(numConta);
+            System.out.println(conta);
+        } catch (ContaInexistenteException e){
+            System.out.println("Conta Inexistente");
+        }
     }
 
     public void bonificaConta() {
@@ -74,9 +82,15 @@ public class GerenteView {
 
         System.out.println("numero da conta ");
         numConta = Leitor.getLeitor().nextInt();
-        String message = acesso.bonificarConta(numConta);
 
-        System.out.println(message);
+        try {
+            acesso.bonifica(numConta);
+            System.out.println("Conta bonificada ");
+        } catch (ContaInexistenteException e){
+            System.out.println("Conta Inexistente");
+        } catch (ContaTipoErradoException e){
+            System.out.println("Conta nao e bonificada ");
+        }
     }
 
 }

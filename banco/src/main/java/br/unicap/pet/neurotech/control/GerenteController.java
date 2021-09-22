@@ -2,31 +2,35 @@ package br.unicap.pet.neurotech.control;
 
 import java.util.List;
 
-import br.unicap.pet.neurotech.model.dao.GerenteDAO;
-import br.unicap.pet.neurotech.model.dao.GerenteDAOMemoria;
+import br.unicap.pet.neurotech.model.dao.ClienteDAOMemoria;
+import br.unicap.pet.neurotech.model.exceptions.ContaInexistenteException;
+import br.unicap.pet.neurotech.model.exceptions.ContaJaExisteException;
+import br.unicap.pet.neurotech.model.exceptions.ContaTipoErradoException;
+import br.unicap.pet.neurotech.model.dao.ClienteDAO;
+
 
 public class GerenteController {
 
-    private GerenteDAO dao = GerenteDAOMemoria.getInstance();
+    private ClienteDAO dao = ClienteDAOMemoria.getInstance();
 
-    public boolean criarConta(int idConta, int tipoConta) {
-        return dao.criarConta(idConta, tipoConta);
+    public void criarConta(int idConta, int tipoConta) throws ContaJaExisteException {
+        dao.criarConta(idConta, tipoConta);
     }
 
-    public boolean removerConta(int idConta) {
-        return dao.removerConta(idConta);
+    public void remover(int idConta) throws ContaInexistenteException {
+        dao.remover(idConta);
     }
 
-    public String getConta(int idConta) {
+    public String getConta(int idConta) throws ContaInexistenteException {
         return dao.getConta(idConta);
     }
 
-    public List getContasList() {
-        return dao.getContasList();
+    public List getContas() {
+        return dao.getContas();
     }
 
-    public String bonificarConta(int idConta) {
-        return dao.bonificarConta(idConta);
+    public void bonifica(int idConta) throws ContaInexistenteException, ContaTipoErradoException {
+        dao.bonifica(idConta);
     }
 
 }
