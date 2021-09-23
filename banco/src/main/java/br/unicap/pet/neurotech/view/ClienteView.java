@@ -11,64 +11,38 @@ public class ClienteView {
     ClienteController acesso = new ClienteController();
 
     public void sacar() {
-        int numConta;
 
-        System.out.println("numero da conta ");
-        numConta = Leitor.getLeitor().nextInt();
-        boolean haConta = acesso.buscar(numConta);
+        System.out.println("Informe a quantia a Sacar: ");
+        float quantia = Leitor.getLeitor().nextFloat();
 
-        if (haConta) {
-            System.out.println("Informe a quantia a Sacar: ");
-            float quantia = Leitor.getLeitor().nextFloat();
-
-            try{
-                acesso.sacar(numConta, quantia);
-                System.out.println("Saque concluido");
-            } catch (ValorInvalidoException e){
-                System.out.println("Valor invalido");
-            } catch (SaldoInsuficienteException e){
-                System.out.println("Saldo insuficiente");
-            }
-            
-        } else {
-            System.out.println("Conta Inexistente");
+        try{
+            acesso.sacar(quantia);
+            System.out.println("Saque completo ");
+        } catch (ValorInvalidoException e){
+            System.out.println("Valor invalido");
+        } catch (SaldoInsuficienteException e){
+            System.out.println("Saldo insuficiente");
         }
+        
     }
 
     public void depositar() {
-        int numConta;
 
-        System.out.println("numero da conta ");
-        numConta = Leitor.getLeitor().nextInt();
-        boolean haConta = acesso.buscar(numConta);
+        System.out.println("Informe a quantia a depositar: ");
+        float quantia = Leitor.getLeitor().nextFloat();
 
-        if (haConta) {
-            System.out.println("Informe a quantia a depositar: ");
-            float quantia = Leitor.getLeitor().nextFloat();
-
-            try {
-                acesso.depositar(numConta, quantia);
-                System.out.println("Deposito concluido");
-            } catch (ValorInvalidoException e){
-                System.out.println("Valor invalido");
-            }
-            
-        } else {
-            System.out.println("Conta Inexistente");
+        try {
+            acesso.depositar(quantia);
+            System.out.println("Deposito concluido");
+        } catch (ValorInvalidoException e){
+            System.out.println("Valor invalido");
         }
+
     }
 
     public void checarConta() {
-        int numConta;
+        Float saldo = acesso.getSaldo();
+        System.out.println("Saldo da conta: " + saldo);
 
-        System.out.println("numero da conta ");
-        numConta = Leitor.getLeitor().nextInt();
-
-        try {
-            String conta = acesso.getConta(numConta);
-            System.out.println(conta);
-        } catch (ContaInexistenteException e){
-            System.out.println("Conta Inexistente");
-        }
     }
 }

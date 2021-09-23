@@ -16,9 +16,13 @@ public class GerenteView {
 
     public void criarConta() {
         int numConta, tipoConta;
+        String senha;
 
         System.out.println("numero da nova conta ");
         numConta = Leitor.getLeitor().nextInt();
+
+        System.out.println("senha da nova conta ");
+        senha = Leitor.getLeitor().next();
 
         System.out.println("\nTipo de conta ");
         System.out.println("1 - Conta normal");
@@ -26,7 +30,7 @@ public class GerenteView {
         tipoConta = Leitor.getLeitor().nextInt();
         if (tipoConta > 0 && tipoConta < 3) {
             try {
-                acesso.criarConta(numConta, tipoConta);
+                acesso.criarConta(numConta, senha, tipoConta);
                 System.out.println("conta criada com sucesso");
             } catch (ContaJaExisteException e){
                 System.out.println("Conta ja existe");

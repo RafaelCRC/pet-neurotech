@@ -4,8 +4,8 @@ public class ContaBoni extends Conta {
 
     private float bonus;
 
-    public ContaBoni(int num) {
-        super(num);
+    public ContaBoni(int num, String senha) {
+        super(num, senha);
         this.tipo = "bonificada";
     }
 

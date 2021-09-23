@@ -6,6 +6,7 @@ public class MenuGerente {
 
     public void Menu() {
         GerenteView gv = new GerenteView();
+        LoginRegistroView lrv = new LoginRegistroView();
         int op;
         do {
             System.out.println("\n<<MENU GERENTE>>");
@@ -14,7 +15,7 @@ public class MenuGerente {
             System.out.println("3 - Buscar Conta");
             System.out.println("4 - Listar Contas");
             System.out.println("5 - Bonificar Conta");
-            System.out.println("6 - Voltar");
+            System.out.println("6 - Deslogar");
             op = Leitor.getLeitor().nextInt();
             System.out.println("");
             switch (op) {
@@ -34,7 +35,7 @@ public class MenuGerente {
                     gv.bonificaConta();
                     break;
                 case 6:
-                    System.out.println("Voltando!!");
+                    lrv.Deslogar();
                     break;
                 default:
                     System.out.println("Opcao invalida!!");

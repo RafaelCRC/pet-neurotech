@@ -8,9 +8,13 @@ public class Conta {
     protected float saldo;
     protected String tipo;
 
-    public Conta(int num) {
+    protected String login;
+    protected String senha;
+
+    public Conta(int num, String senha) {
         this.saldo = 0;
         this.numConta = num;
+        this.senha = senha;
         this.tipo = "normal";
         
     }
@@ -37,5 +41,14 @@ public class Conta {
 
     public String getTipo() {
         return this.tipo;
+    }
+
+    public String getLogin() {
+        String ret = "" + this.numConta;
+        return ret;
+    }
+
+    public String getSenha() {
+        return this.senha;
     }
 }
