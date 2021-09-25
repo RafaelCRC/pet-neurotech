@@ -2,14 +2,21 @@ package br.unicap.pet.neurotech.model.dao;
 
 import java.util.List;
 
-import br.unicap.pet.neurotech.model.exceptions.ContaInexistenteException;
-import br.unicap.pet.neurotech.model.exceptions.ContaJaExisteException;
-import br.unicap.pet.neurotech.model.exceptions.ContaTipoErradoException;
-import br.unicap.pet.neurotech.model.exceptions.DadosLoginErradoException;
-import br.unicap.pet.neurotech.model.exceptions.SaldoInsuficienteException;
-import br.unicap.pet.neurotech.model.exceptions.ValorInvalidoException;
+import br.unicap.pet.neurotech.model.exceptions.*;
 
 public class ContaDAO_DB implements ClienteDAO{
+
+    private static ContaDAO_DB self;
+
+    private ContaDAO_DB(){
+    }
+
+    public static ContaDAO_DB getInstance(){
+        if (self == null){
+            self = new ContaDAO_DB();
+        }
+        return self;
+    }
 
     @Override
     public void registro(String login, String senha, int tipoConta, boolean isGerente) throws ContaJaExisteException {
