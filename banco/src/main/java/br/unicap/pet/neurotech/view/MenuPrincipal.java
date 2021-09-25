@@ -7,8 +7,6 @@ public class MenuPrincipal {
     public static void main(String[] args) {
         int op;
         
-        //MenuCliente acessoCliente = new MenuCliente();
-        //MenuGerente acessoGerente = new MenuGerente();
         MenuLogin acessoLogin = new MenuLogin();
         MenuRegistro acessoRegistro = new MenuRegistro();
         do {

@@ -8,8 +8,8 @@ public class ClienteController {
 
     private ClienteDAO dao = ClienteDAOMemoria.getInstance();
 
-    public boolean buscar(int numConta) {
-        return dao.buscarConta(numConta);
+    public boolean buscar(String login) {
+        return dao.buscarConta(login);
     }
 
     public void sacar(float quantia) throws SaldoInsuficienteException, ValorInvalidoException {

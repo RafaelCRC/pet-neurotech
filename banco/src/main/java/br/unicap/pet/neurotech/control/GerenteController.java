@@ -11,24 +11,24 @@ public class GerenteController {
 
     private ClienteDAO dao = ClienteDAOMemoria.getInstance();
 
-    public void criarConta(int idConta, String senha, int tipoConta) throws ContaJaExisteException {
-        dao.criarConta(idConta, senha, tipoConta);
+    public void criarConta(String login, String senha, int tipoConta) throws ContaJaExisteException {
+        dao.criarConta(login, senha, tipoConta);
     }
 
-    public void remover(int idConta) throws ContaInexistenteException {
-        dao.remover(idConta);
+    public void remover(String login) throws ContaInexistenteException {
+        dao.remover(login);
     }
 
-    public String getConta(int idConta) throws ContaInexistenteException {
-        return dao.getConta(idConta);
+    public String getConta(String login) throws ContaInexistenteException {
+        return dao.getConta(login);
     }
 
     public List getContas() {
         return dao.getContas();
     }
 
-    public void bonifica(int idConta) throws ContaInexistenteException, ContaTipoErradoException {
-        dao.bonifica(idConta);
+    public void bonifica(String login) throws ContaInexistenteException, ContaTipoErradoException {
+        dao.bonifica(login);
     }
 
 }

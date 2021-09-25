@@ -4,24 +4,19 @@ import br.unicap.pet.neurotech.model.exceptions.SaldoInsuficienteException;
 
 public class Conta {
 
-    protected int numConta;
+    // protected int numConta;
     protected float saldo;
     protected String tipo;
 
-    protected String login;
-    protected String senha;
-
-    public Conta(int num, String senha) {
+    public Conta() {
         this.saldo = 0;
-        this.numConta = num;
-        this.senha = senha;
+        // this.numConta = num;
         this.tipo = "normal";
-        
     }
 
-    public int getNumero() {
-        return this.numConta;
-    }
+    /*
+     * public int getNumero() { return this.numConta; }
+     */
 
     public void sacar(float quantia) throws SaldoInsuficienteException {
         if (this.saldo >= quantia) {
@@ -43,12 +38,4 @@ public class Conta {
         return this.tipo;
     }
 
-    public String getLogin() {
-        String ret = "" + this.numConta;
-        return ret;
-    }
-
-    public String getSenha() {
-        return this.senha;
-    }
 }

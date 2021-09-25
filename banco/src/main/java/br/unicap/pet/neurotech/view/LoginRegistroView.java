@@ -13,11 +13,16 @@ public class LoginRegistroView {
     LoginController acesso = new LoginController();
 
     public void Logar(int op) {
-        int login;
+        //int login;
+        String login;
         String senha;
 
-        System.out.println("numero de usuario ");
-        login = Leitor.getLeitor().nextInt();
+        //System.out.println("numero de usuario ");
+        //login = Leitor.getLeitor().nextInt();
+
+        System.out.println("nome de usuario");
+        login = Leitor.getLeitor().next();
+
         System.out.println("senha ");
         senha = Leitor.getLeitor().next();
 
@@ -35,12 +40,18 @@ public class LoginRegistroView {
     }
 
     public void Registrar(int op){
-        int login, tipoConta = 1;
+        //int login;
+        int tipoConta = 1;
+        String login;
         String senha;
         boolean isGerente = true;
 
-        System.out.println("numero de usuario ");
-        login = Leitor.getLeitor().nextInt();
+        //System.out.println("numero de usuario ");
+        //login = Leitor.getLeitor().nextInt();
+
+        System.out.println("nome de usuario");
+        login = Leitor.getLeitor().next();
+
         System.out.println("senha ");
         senha = Leitor.getLeitor().next();
 

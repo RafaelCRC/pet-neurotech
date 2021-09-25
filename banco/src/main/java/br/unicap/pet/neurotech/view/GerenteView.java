@@ -15,11 +15,16 @@ public class GerenteView {
     //GerenteController acessotemp = new ClienteController();
 
     public void criarConta() {
-        int numConta, tipoConta;
+        //int numConta;
+        int tipoConta;
         String senha;
+        String login;
 
-        System.out.println("numero da nova conta ");
-        numConta = Leitor.getLeitor().nextInt();
+        //System.out.println("numero da nova conta ");
+        //numConta = Leitor.getLeitor().nextInt();
+
+        System.out.println("nome de usuario");
+        login = Leitor.getLeitor().next();
 
         System.out.println("senha da nova conta ");
         senha = Leitor.getLeitor().next();
@@ -30,7 +35,8 @@ public class GerenteView {
         tipoConta = Leitor.getLeitor().nextInt();
         if (tipoConta > 0 && tipoConta < 3) {
             try {
-                acesso.criarConta(numConta, senha, tipoConta);
+                //acesso.criarConta(numConta, senha, tipoConta);
+                acesso.criarConta(login, senha, tipoConta);
                 System.out.println("conta criada com sucesso");
             } catch (ContaJaExisteException e){
                 System.out.println("Conta ja existe");
@@ -42,13 +48,18 @@ public class GerenteView {
     }
 
     public void removerConta() {
-        int numConta;
+        //int numConta;
+        String login;
 
-        System.out.println("numero da conta ");
-        numConta = Leitor.getLeitor().nextInt();
+        //System.out.println("numero da conta ");
+        //numConta = Leitor.getLeitor().nextInt();
+
+        System.out.println("nome de usuario");
+        login = Leitor.getLeitor().next();
 
         try {
-            acesso.remover(numConta);
+            //acesso.remover(numConta);
+            acesso.remover(login);
             System.out.println("conta removida com sucesso");
         }catch (ContaInexistenteException e){
             System.out.println("Conta Inexistente");
@@ -68,13 +79,18 @@ public class GerenteView {
     }
 
     public void getConta() {
-        int numConta;
+        //int numConta;
+        String login;
 
-        System.out.println("numero da conta ");
-        numConta = Leitor.getLeitor().nextInt();
+        //System.out.println("numero da conta ");
+        //numConta = Leitor.getLeitor().nextInt();
+
+        System.out.println("nome de usuario");
+        login = Leitor.getLeitor().next();
 
         try {
-            String conta = acesso.getConta(numConta);
+            //String conta = acesso.getConta(numConta);
+            String conta = acesso.getConta(login);
             System.out.println(conta);
         } catch (ContaInexistenteException e){
             System.out.println("Conta Inexistente");
@@ -82,13 +98,18 @@ public class GerenteView {
     }
 
     public void bonificaConta() {
-        int numConta;
+        //int numConta;
+        String login;
 
-        System.out.println("numero da conta ");
-        numConta = Leitor.getLeitor().nextInt();
+        //System.out.println("numero da conta ");
+        //numConta = Leitor.getLeitor().nextInt();
+
+        System.out.println("nome de usuario");
+        login = Leitor.getLeitor().next();
 
         try {
-            acesso.bonifica(numConta);
+            //acesso.bonifica(numConta);
+            acesso.bonifica(login);
             System.out.println("Conta bonificada ");
         } catch (ContaInexistenteException e){
             System.out.println("Conta Inexistente");

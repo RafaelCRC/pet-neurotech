@@ -7,14 +7,15 @@ import br.unicap.pet.neurotech.model.exceptions.*;
 
 public class ClienteDAOMemoria implements ClienteDAO {
 
-    private List<Conta> clientes;
-    private List<Conta> gerentes;
-    private Conta Logged;
+    private List<UserAbs> clientes;
+    private List<UserAbs> gerentes;
+    private UserAbs Logged;
+
     private static ClienteDAOMemoria self;
 
     public ClienteDAOMemoria() {
-        clientes = new ArrayList<Conta>();
-        gerentes = new ArrayList<Conta>();
+        clientes = new ArrayList<UserAbs>();
+        gerentes = new ArrayList<UserAbs>();
     }
 
     public static ClienteDAO getInstance() {
@@ -26,25 +27,28 @@ public class ClienteDAOMemoria implements ClienteDAO {
 
     // metodos de login e registro
     @Override
-    public void registro(int idConta, String senha, int tipoConta, boolean isGerente) throws ContaJaExisteException {
+    public void registro(String login, String senha, int tipoConta, boolean isGerente) throws ContaJaExisteException {
 
+        UserAbs novoUser;
         Conta novaConta;
 
         if (isGerente) {
-            if (!buscarContaGerente(idConta)) {
-                novaConta = new ContaGerente(idConta, senha); // falta a senha
-                this.gerentes.add(novaConta);
+            if (!buscarContaGerente(login)) {
+                novoUser = new UserGerente(login, senha);
+                this.gerentes.add(novoUser);
             } else {
                 throw new ContaJaExisteException();
             }
         } else {
-            if (!buscarConta(idConta)) {
-                if (tipoConta == 1) {
-                    novaConta = new Conta(idConta, senha);
-                    this.clientes.add(novaConta);
-                } else if (tipoConta == 2) {
-                    novaConta = new ContaBoni(idConta, senha);
-                    this.clientes.add(novaConta);
+            if (!buscarConta(login)) {
+                if (tipoConta == 1) { // conta normal
+                    novaConta = new Conta();
+                    novoUser = new UserCliente(login, senha, novaConta);
+                    this.clientes.add(novoUser);
+                } else if (tipoConta == 2) { // conta bonificada
+                    novaConta = new ContaBoni();
+                    novoUser = new UserCliente(login, senha, novaConta);
+                    this.clientes.add(novoUser);
                 }
             } else {
                 throw new ContaJaExisteException();
@@ -53,26 +57,20 @@ public class ClienteDAOMemoria implements ClienteDAO {
     }
 
     @Override
-    public void logIn(int idConta, String senha, int tipoConta) throws DadosLoginErradoException {
+    public void logIn(String login, String senha, int isGerente) throws DadosLoginErradoException {
 
-        Conta contaLogin;
-
-        if (tipoConta == 2) {
-            for (Conta conta : gerentes) {
-                if (conta.getNumero() == idConta && conta.getSenha().equals(senha)) {
-                    contaLogin = new ContaGerente(idConta, senha);
-                    attLogged(contaLogin);
+        if (isGerente == 2) {
+            for (UserAbs user : gerentes) {
+                if (user.getLogin().equals(login) && user.getSenha().equals(senha)) {
+                    attLogged(user);
                     return;
                 }
             }
             throw new DadosLoginErradoException();
         } else {
-            for (Conta conta : clientes) {
-                System.out.println("Logissssss");
-                System.out.println(conta.getSenha());
-                if (conta.getNumero() == idConta && conta.getSenha().equals(senha)) {
-                    contaLogin = new Conta(idConta, senha);
-                    attLogged(contaLogin);
+            for (UserAbs user : clientes) {
+                if (user.getLogin().equals(login) && user.getSenha().equals(senha)) {
+                    attLogged(user);
                     return;
                 }
             }
@@ -81,8 +79,8 @@ public class ClienteDAOMemoria implements ClienteDAO {
     }
 
     @Override
-    public void attLogged(Conta conta) {
-        this.Logged = conta;
+    public void attLogged(UserAbs user) {
+        this.Logged = user;
     }
 
     @Override
@@ -92,10 +90,10 @@ public class ClienteDAOMemoria implements ClienteDAO {
 
     // metodos de gerente
     @Override
-    public boolean buscarConta(int numConta) {
+    public boolean buscarConta(String login) {
         boolean encontrado = false;
-        for (Conta conta : clientes) {
-            if (conta.getNumero() == numConta) {
+        for (UserAbs user : clientes) {
+            if (user.getLogin().equals(login)) {
                 encontrado = true;
             }
         }
@@ -103,10 +101,10 @@ public class ClienteDAOMemoria implements ClienteDAO {
     }
 
     @Override
-    public boolean buscarContaGerente(int numConta) {
+    public boolean buscarContaGerente(String login) {
         boolean encontrado = false;
-        for (Conta conta : gerentes) {
-            if (conta.getNumero() == numConta) {
+        for (UserAbs user : gerentes) {
+            if (user.getLogin().equals(login)) {
                 encontrado = true;
             }
         }
@@ -114,25 +112,27 @@ public class ClienteDAOMemoria implements ClienteDAO {
     }
 
     @Override
-    public void criarConta(int idConta, String senha, int tipoConta) throws ContaJaExisteException {
-        if (buscarConta(idConta)) {
+    public void criarConta(String login, String senha, int tipoConta) throws ContaJaExisteException {
+        if (buscarConta(login)) {
             throw new ContaJaExisteException();
         }
+        UserAbs novoUser;
         Conta novaConta;
         if (tipoConta == 1) {
-            novaConta = new Conta(idConta, senha);
+            novaConta = new Conta();
         } else {
-            novaConta = new ContaBoni(idConta, senha);
+            novaConta = new ContaBoni();
         }
-        this.clientes.add(novaConta);
+        novoUser = new UserCliente(login, senha, novaConta);
+        this.clientes.add(novoUser);
     }
 
     @Override
-    public void remover(int idConta) throws ContaInexistenteException {
+    public void remover(String login) throws ContaInexistenteException {
 
-        for (Conta conta : clientes) {
-            if (conta.getNumero() == idConta) {
-                clientes.remove(conta);
+        for (UserAbs user : clientes) {
+            if (user.getLogin().equals(login)) {
+                clientes.remove(user);
                 return;
             }
         }
@@ -140,13 +140,14 @@ public class ClienteDAOMemoria implements ClienteDAO {
     }
 
     @Override
-    public void bonifica(int idConta) throws ContaInexistenteException, ContaTipoErradoException {
+    public void bonifica(String login) throws ContaInexistenteException, ContaTipoErradoException {
 
-        if (buscarConta(idConta)) {
-            for (Conta conta : clientes) {
-                if (conta.getNumero() == idConta) {
-                    if (conta instanceof ContaBoni) {
-                        ((ContaBoni) conta).doBonifica();
+        if (buscarConta(login)) {
+            for (UserAbs user : clientes) {
+                if (user.getLogin().equals(login)) {
+                    Conta temp = ((UserCliente) user).getConta();
+                    if (temp instanceof ContaBoni) {
+                        ((ContaBoni) ((UserCliente) user).getConta()).doBonifica();
                         return;
                     }
                 }
@@ -157,14 +158,14 @@ public class ClienteDAOMemoria implements ClienteDAO {
     }
 
     @Override
-    public String getConta(int idConta) throws ContaInexistenteException {
+    public String getConta(String login) throws ContaInexistenteException {
 
         String contaString;
 
-        for (Conta conta : clientes) {
-            if (conta.getNumero() == idConta) {
-                contaString = ("Conta: " + conta.getNumero() + "; Saldo: " + conta.getSaldo() + "; Tipo: "
-                        + conta.getTipo());
+        for (UserAbs user : clientes) {
+            if (user.getLogin().equals(login)) {
+                contaString = ("Usuario: " + user.getLogin() + "; Saldo: " + ((UserCliente) user).getConta().getSaldo()
+                        + "; Tipo: " + ((UserCliente) user).getConta().getTipo());
                 return contaString;
             }
         }
@@ -176,21 +177,21 @@ public class ClienteDAOMemoria implements ClienteDAO {
 
         List<String> contas = new ArrayList<String>();
 
-        for (Conta conta : clientes) {
-            contas.add("Conta: " + conta.getNumero() + "; Saldo: " + conta.getSaldo() + "; Tipo: " + conta.getTipo());
+        for (UserAbs user : clientes) {
+            contas.add("Usuario: " + user.getLogin() + "; Saldo: " + ((UserCliente) user).getConta().getSaldo()
+                    + "; Tipo: " + ((UserCliente) user).getConta().getTipo());
         }
         return contas;
     }
 
-    // metodos cliente
     @Override
     public void sacarConta(float quantia) throws SaldoInsuficienteException, ValorInvalidoException {
         if (quantia < 0) {
             throw new ValorInvalidoException();
         }
-        for (Conta conta : clientes) {
-            if (conta.getNumero() == this.Logged.getNumero()) {
-                conta.sacar(quantia);
+        for (UserAbs user : clientes) {
+            if (user.getLogin().equals(Logged.getLogin())) {
+                ((UserCliente) user).getConta().sacar(quantia);
             }
         }
     }
@@ -200,9 +201,9 @@ public class ClienteDAOMemoria implements ClienteDAO {
         if (quantia < 0) {
             throw new ValorInvalidoException();
         }
-        for (Conta conta : clientes) {
-            if (conta.getNumero() == this.Logged.getNumero()) {
-                conta.depositar(quantia);
+        for (UserAbs user : clientes) {
+            if (user.getLogin().equals(Logged.getLogin())) {
+                ((UserCliente) user).getConta().depositar(quantia);
             }
         }
     }
@@ -210,9 +211,9 @@ public class ClienteDAOMemoria implements ClienteDAO {
     @Override
     public Float getSaldo() {
         Float saldo = null;
-        for (Conta conta : clientes) {
-            if (conta.getNumero() == this.Logged.getNumero()) {
-                saldo = conta.getSaldo();
+        for (UserAbs user : clientes) {
+            if (user.getLogin().equals(Logged.getLogin())) {
+                saldo = ((UserCliente) user).getConta().getSaldo();
             }
         }
         return saldo;
