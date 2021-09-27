@@ -62,7 +62,7 @@ public class ClienteDAOMemoria implements ClienteDAO {
         if (isGerente == 2) {
             for (UserAbs user : gerentes) {
                 if (user.getLogin().equals(login) && user.getSenha().equals(senha)) {
-                    attLogged(user);
+                    //attLogged(user);
                     return;
                 }
             }
@@ -70,7 +70,7 @@ public class ClienteDAOMemoria implements ClienteDAO {
         } else {
             for (UserAbs user : clientes) {
                 if (user.getLogin().equals(login) && user.getSenha().equals(senha)) {
-                    attLogged(user);
+                    //attLogged(user);
                     return;
                 }
             }
@@ -79,8 +79,8 @@ public class ClienteDAOMemoria implements ClienteDAO {
     }
 
     @Override
-    public void attLogged(UserAbs user) {
-        this.Logged = user;
+    public void attLogged(int id) {
+        //this.Logged = user;
     }
 
     @Override
@@ -217,5 +217,17 @@ public class ClienteDAOMemoria implements ClienteDAO {
             }
         }
         return saldo;
+    }
+
+    @Override
+    public void connect() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void dis() {
+        // TODO Auto-generated method stub
+        
     }
 }

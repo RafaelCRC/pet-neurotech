@@ -11,7 +11,7 @@ public interface ClienteDAO {
 
     void logIn(String login, String senha, int isGerente) throws DadosLoginErradoException;
 
-    void attLogged(UserAbs user);
+    void attLogged(int id);
 
     void logOut();
 
@@ -36,5 +36,9 @@ public interface ClienteDAO {
     void depositarConta(float quantia) throws ValorInvalidoException;
     
     Float getSaldo();
+
+    void connect();
+
+    void dis();
 
 }

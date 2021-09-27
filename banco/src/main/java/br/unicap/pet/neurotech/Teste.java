@@ -15,11 +15,10 @@ public class Teste {
         
 
         int numConta = 1;
-
-        String query1 = "INSERT INTO ContaRafael (numero"+
-        ",saldo)"+
-        "VALUES("+numConta+
-        ",1000);";
+        //"INSERT INTO ContaRafael (userLogin, userPassword, accountType, ballance)"+
+        //"VALUES(rafael, 123, 1, 1000);";
+        String query1 = "INSERT INTO ContaRafael (userLogin, userPassword, accountType, ballance)"+
+        "VALUES('rafael', 123, 1, 1000);";
 
         String query2 = "select * from ContaRafael;";
 
@@ -31,8 +30,9 @@ public class Teste {
             while (rs.next()) {
                 //System.out.println(rs.getString(0));
                 System.out.println(rs.getString(1));
-                System.out.println(rs.getInt(2));
+                System.out.println(rs.getString(2));
                 System.out.println(rs.getString(3));
+                System.out.println(rs.getString(4));
             }
             con.close();
         } catch (SQLException e) {
