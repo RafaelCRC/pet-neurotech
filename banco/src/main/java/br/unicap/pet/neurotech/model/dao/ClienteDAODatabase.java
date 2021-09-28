@@ -12,9 +12,9 @@ import java.sql.Statement;
 
 import br.unicap.pet.neurotech.model.exceptions.*;
 
-public class ContaDAO_DB implements ClienteDAO {
+public class ClienteDAODatabase implements ClienteDAO {
 
-    private static ContaDAO_DB self;
+    private static ClienteDAODatabase self;
 
     private int logged;
     private UserAbs loggedGerente;
@@ -22,13 +22,13 @@ public class ContaDAO_DB implements ClienteDAO {
 
     private Connection con;
 
-    private ContaDAO_DB() {
+    private ClienteDAODatabase() {
         gerentes = new ArrayList<UserAbs>();
     }
 
-    public static ContaDAO_DB getInstance() {
+    public static ClienteDAODatabase getInstance() {
         if (self == null) {
-            self = new ContaDAO_DB();
+            self = new ClienteDAODatabase();
         }
         return self;
     }

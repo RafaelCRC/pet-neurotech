@@ -2,13 +2,13 @@ package br.unicap.pet.neurotech.control;
 
 import java.util.List;
 
-import br.unicap.pet.neurotech.model.dao.ContaDAO_DB;
+import br.unicap.pet.neurotech.model.dao.ClienteDAODatabase;
 import br.unicap.pet.neurotech.model.exceptions.*;
 import br.unicap.pet.neurotech.model.dao.ClienteDAO;
 
 public class GerenteController {
 
-    private ClienteDAO dao = ContaDAO_DB.getInstance();
+    private ClienteDAO dao = ClienteDAODatabase.getInstance();
 
     public void criarConta(String login, String senha, int tipoConta) throws ContaJaExisteException {
         dao.criarConta(login, senha, tipoConta);

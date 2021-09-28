@@ -1,11 +1,11 @@
 package br.unicap.pet.neurotech.control;
 
 import br.unicap.pet.neurotech.model.dao.ClienteDAO;
-import br.unicap.pet.neurotech.model.dao.ContaDAO_DB;
+import br.unicap.pet.neurotech.model.dao.ClienteDAODatabase;
 
 public class DBController {
 
-    private ClienteDAO dao = ContaDAO_DB.getInstance();
+    private ClienteDAO dao = ClienteDAODatabase.getInstance();
     
     public void connect(){
         dao.connect();
